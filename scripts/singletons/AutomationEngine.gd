@@ -32,12 +32,18 @@ func _ready() -> void:
 	add_child(evaluation_timer)
 	evaluation_timer.start()
 	
+	# Wait for StorageManager to be ready
+	if StorageManager.is_available():
+		_load_saved_data()
+	else:
+		StorageManager.storage_ready.connect(_load_saved_data)
+	
 	# Create sample automations after a short delay to ensure devices are registered
 	await get_tree().create_timer(0.5).timeout
 	_create_sample_automations()
 
 ## Add a new automation to the active list
-func add_automation(automation: Automation) -> void:
+func add_automation(automation: Automation, save_to_storage: bool = true) -> void:
 	if automation == null:
 		push_error("AutomationEngine: Cannot add null automation")
 		return
@@ -51,13 +57,21 @@ func add_automation(automation: Automation) -> void:
 	
 	active_automations.append(automation)
 	print("AutomationEngine: Added automation '%s' (ID: %s)" % [automation.automation_name, automation.automation_id])
+	
+	# Save to storage if requested
+	if save_to_storage:
+		_save_user_automations()
 
 ## Remove an automation by ID
-func remove_automation(automation_id: String) -> void:
+func remove_automation(automation_id: String, save_to_storage: bool = true) -> void:
 	for i in range(active_automations.size() - 1, -1, -1):
 		if active_automations[i].automation_id == automation_id:
 			print("AutomationEngine: Removed automation '%s'" % active_automations[i].automation_name)
 			active_automations.remove_at(i)
+			
+			# Save to storage if requested
+			if save_to_storage:
+				_save_user_automations()
 			return
 	
 	push_warning("AutomationEngine: Automation %s not found" % automation_id)
@@ -346,3 +360,60 @@ func _populate_sample_history() -> void:
 				break
 	
 	print("AutomationEngine: Added %d sample history entries" % automation_history.size())
+
+## Load saved data from StorageManager
+func _load_saved_data() -> void:
+	print("AutomationEngine: Loading saved data...")
+	
+	# Load user-created automations
+	var saved_automations = StorageManager.load_user_automations()
+	if saved_automations.size() > 0:
+		print("AutomationEngine: Loading %d saved automations" % saved_automations.size())
+		for automation in saved_automations:
+			add_automation(automation, false)  # Don't save back to storage
+	else:
+		print("AutomationEngine: No saved automations found")
+
+## Save user automations to StorageManager
+func _save_user_automations() -> void:
+	# Filter out sample automations (those created in _create_sample_automations)
+	var user_automations = []
+	var sample_names = [
+		"Evening Lights", "Morning Routine", "Night Mode", "Entry Light Activation",
+		"Auto Climate Control", "Window Closed Heating", "Afternoon Sun Protection",
+		"Evening Entertainment", "Auto Water Refill", "Night Security Lock"
+	]
+	
+	for automation in active_automations:
+		if not automation.automation_name in sample_names:
+			user_automations.append(automation)
+	
+	if user_automations.size() > 0:
+		print("AutomationEngine: Saving %d user automations" % user_automations.size())
+		StorageManager.save_user_automations(user_automations)
+	else:
+		print("AutomationEngine: No user automations to save")
+
+## Save all device states
+func save_device_states() -> void:
+	var states = {}
+	for device in DeviceRegistry.get_all_devices():
+		states[device.device_id] = device.get_state()
+	
+	StorageManager.save_device_states(states)
+	print("AutomationEngine: Saved %d device states" % states.size())
+
+## Load and restore device states
+func load_device_states() -> void:
+	var states = StorageManager.load_device_states()
+	if states.is_empty():
+		print("AutomationEngine: No saved device states found")
+		return
+	
+	print("AutomationEngine: Loading %d device states" % states.size())
+	for device_id in states:
+		var device = DeviceRegistry.get_device(device_id)
+		if device != null:
+			device.set_state(states[device_id])
+		else:
+			push_warning("AutomationEngine: Device %s not found for state restoration" % device_id)

@@ -35,6 +35,10 @@ func _ready() -> void:
 	# Configure and register all devices
 	_configure_all_devices()
 	
+	# Load saved device states after a short delay to ensure all devices are registered
+	await get_tree().create_timer(0.2).timeout
+	AutomationEngine.load_device_states()
+	
 	# Set camera for InteractionManager
 	if explore_camera and InteractionManager:
 		InteractionManager.set_camera(explore_camera)
@@ -78,6 +82,11 @@ func _input(event: InputEvent) -> void:
 		elif key_event.pressed and key_event.keycode == KEY_E:
 			# Open automation editor with E key
 			SceneManager.change_scene("res://scenes/AutomationEditorScene.tscn")
+
+func _on_history_panel_closed() -> void:
+	"""Handle history panel being closed"""
+	if InteractionManager:
+		InteractionManager.clear_history_highlights()
 
 func _configure_all_devices() -> void:
 	"""Configure device IDs and names, then register with DeviceRegistry"""

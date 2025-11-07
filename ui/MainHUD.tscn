@@ -1,0 +1,195 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8j9k2l3m4n5o6p7"]
+
+[ext_resource type="Script" path="res://scripts/MainHUD.gd" id="1_main_hud"]
+
+[node name="MainHUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_main_hud")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBar" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/TopBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TopBar/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Control/TopBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Smart Home Demo"
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="Control/TopBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModeSwitcher" type="HBoxContainer" parent="Control/TopBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="ExploreButton" type="Button" parent="Control/TopBar/MarginContainer/HBoxContainer/ModeSwitcher"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Explore"
+
+[node name="HistoryButton" type="Button" parent="Control/TopBar/MarginContainer/HBoxContainer/ModeSwitcher"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "History"
+
+[node name="EditorButton" type="Button" parent="Control/TopBar/MarginContainer/HBoxContainer/ModeSwitcher"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Editor"
+
+[node name="HelpButton" type="Button" parent="Control/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "?"
+
+[node name="ResetButton" type="Button" parent="Control/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+text = "Reset"
+
+[node name="Minimap" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -220.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Minimap"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Minimap/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Minimap/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Location"
+horizontal_alignment = 1
+
+[node name="FloorPlan" type="ColorRect" parent="Control/Minimap/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(180, 150)
+layout_mode = 2
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="PlayerMarker" type="ColorRect" parent="Control/Minimap/MarginContainer/VBoxContainer/FloorPlan"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 1, 0, 1)
+
+[node name="CurrentMode" type="Label" parent="Control/Minimap/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mode: Explore"
+horizontal_alignment = 1
+
+[node name="HelpOverlay" type="PanelContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/HelpOverlay"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/HelpOverlay/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExploreControls" type="Label" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Explore Mode:
+WASD - Move camera
+Mouse - Look around
+Click - Interact with devices
+H - Toggle history panel
+E - Open automation editor"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VehicleControls" type="Label" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Vehicle Mode:
+W/S - Accelerate/Brake
+A/D - Steer
+Mouse - Rotate camera"
+
+[node name="Spacer" type="Control" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="Control/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[node name="ResetConfirmDialog" type="ConfirmationDialog" parent="Control"]
+title = "Reset All Devices"
+initial_position = 2
+size = Vector2i(400, 150)
+dialog_text = "Are you sure you want to reset all devices to their default states?"
+ok_button_text = "Reset"
+cancel_button_text = "Cancel"

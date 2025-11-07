@@ -66,6 +66,19 @@ func toggle() -> void:
 	if current_state.has("on"):
 		set_state({"on": not current_state["on"]})
 
+func reset_to_default() -> void:
+	"""Reset device to default state (override in subclasses for specific defaults)"""
+	# Default implementation - subclasses should override
+	match device_type:
+		"light":
+			set_state({"on": false, "brightness": 1.0})
+		"door", "window", "blind", "gate", "garage":
+			set_state({"open": false})
+		"tv", "ac", "heater", "pump", "tap":
+			set_state({"on": false})
+		"tank":
+			set_state({"level": 1.0})
+
 func highlight(enable: bool = true) -> void:
 	"""Highlight or unhighlight this device"""
 	if enable == is_highlighted:

@@ -216,8 +216,8 @@
     - Display error messages for invalid configurations before execution
     - _Requirements: 4.5, 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 9. Build main HUD and UI system
-  - [ ] 9.1 Create persistent HUD overlay
+- [x] 9. Build main HUD and UI system
+  - [x] 9.1 Create persistent HUD overlay
     - Create MainHUD.tscn with CanvasLayer
     - Add mode switcher buttons (Explore, Automation Editor, History)
     - Implement mode switching to change scenes and camera modes
@@ -225,7 +225,7 @@
     - Add help button to show controls
     - _Requirements: 8.2, 8.4_
   
-  - [ ] 9.2 Implement tutorial overlay for first-time users
+  - [x] 9.2 Implement tutorial overlay for first-time users
     - Create TutorialOverlay.tscn with step-by-step instructions
     - Show tutorial on first load (check LocalStorage flag)
     - Highlight relevant UI elements for each tutorial step
@@ -233,20 +233,20 @@
     - Set tutorial_completed flag in LocalStorage when finished
     - _Requirements: 8.1_
   
-  - [ ] 9.3 Add reset functionality
+  - [x] 9.3 Add reset functionality
     - Implement reset_all_devices() method in DeviceRegistry
     - Add reset button to HUD that returns all devices to default states
     - Show confirmation dialog before reset
     - _Requirements: 8.5_
 
-- [ ] 10. Implement data persistence with LocalStorage
-  - [ ] 10.1 Create JavaScript bridge for LocalStorage access
+- [x] 10. Implement data persistence with LocalStorage
+  - [x] 10.1 Create JavaScript bridge for LocalStorage access
     - Write JavaScript code to expose localStorage.getItem() and setItem() to Godot
     - Create GDScript wrapper class StorageManager.gd for easy access
     - Implement save_data() and load_data() methods with JSON serialization
     - _Requirements: 6.1_
   
-  - [ ] 10.2 Add save/load for user automations and device states
+  - [x] 10.2 Add save/load for user automations and device states
     - Save user-created automations to LocalStorage on creation
     - Load saved automations on game start and add to AutomationEngine
     - Optionally save device states and restore on reload

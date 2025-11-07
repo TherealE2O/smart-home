@@ -30,8 +30,29 @@ var devices_by_room: Dictionary = {}
 # Dictionary to organize devices by type
 var devices_by_type: Dictionary = {}
 
+var _auto_save_timer: Timer = null
+var _pending_save: bool = false
+
 func _ready() -> void:
-	pass
+	# Set up auto-save timer (save device states every 30 seconds if changes occurred)
+	_auto_save_timer = Timer.new()
+	_auto_save_timer.wait_time = 30.0
+	_auto_save_timer.timeout.connect(_on_auto_save_timeout)
+	add_child(_auto_save_timer)
+	_auto_save_timer.start()
+	
+	# Connect to device state changes
+	device_state_changed.connect(_on_device_state_changed_internal)
+
+func _on_device_state_changed_internal(_device_id: String, _property: String, _value: Variant) -> void:
+	"""Mark that we have pending changes to save"""
+	_pending_save = true
+
+func _on_auto_save_timeout() -> void:
+	"""Auto-save device states if there are pending changes"""
+	if _pending_save and AutomationEngine:
+		AutomationEngine.save_device_states()
+		_pending_save = false
 
 ## Register a new device (supports both SmartDevice nodes and manual registration)
 func register_device(device_id_or_node, device_type: String = "", device_name: String = "", room: String = "", initial_state: Dictionary = {}):
@@ -149,3 +170,27 @@ func set_device_node(device_id: String, node: Node) -> void:
 	var device = get_device(device_id)
 	if device:
 		device.node_reference = node
+
+## Reset all devices to their default states
+func reset_all_devices() -> void:
+	"""Reset all registered devices to their default states"""
+	for device in devices.values():
+		if device.node_reference and device.node_reference.has_method("reset_to_default"):
+			device.node_reference.reset_to_default()
+		else:
+			# Fallback: set common default states
+			match device.type:
+				"light":
+					if device.node_reference and device.node_reference.has_method("set_state"):
+						device.node_reference.set_state({"on": false, "brightness": 1.0})
+				"door", "window", "blind", "gate", "garage":
+					if device.node_reference and device.node_reference.has_method("set_state"):
+						device.node_reference.set_state({"open": false})
+				"tv", "ac", "heater", "pump", "tap":
+					if device.node_reference and device.node_reference.has_method("set_state"):
+						device.node_reference.set_state({"on": false})
+				"tank":
+					if device.node_reference and device.node_reference.has_method("set_state"):
+						device.node_reference.set_state({"level": 1.0})
+	
+	print("All devices reset to default states")

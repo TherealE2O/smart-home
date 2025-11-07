@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://scripts/ExploreCamera.gd" id="12_camera"]
 [ext_resource type="PackedScene" uid="uid://c8y7qm5xvn3wd" path="res://ui/DeviceControlPanel.tscn" id="13_control_panel"]
 [ext_resource type="PackedScene" uid="uid://bx8y9qm6xvn4we" path="res://ui/AutomationHistoryPanel.tscn" id="14_history_panel"]
+[ext_resource type="PackedScene" uid="uid://c8j9k2l3m4n5o6p7" path="res://ui/MainHUD.tscn" id="15_main_hud"]
+[ext_resource type="PackedScene" uid="uid://d9k3l4m5n6o7p8q9" path="res://ui/TutorialOverlay.tscn" id="16_tutorial"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 size = Vector3(15, 0.2, 15)
@@ -175,6 +177,10 @@ script = ExtResource("12_camera")
 [node name="RayCast3D" type="RayCast3D" parent="ExploreCamera"]
 target_position = Vector3(0, 0, -0.5)
 enabled = true
+
+[node name="MainHUD" parent="." instance=ExtResource("15_main_hud")]
+
+[node name="TutorialOverlay" parent="." instance=ExtResource("16_tutorial")]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
