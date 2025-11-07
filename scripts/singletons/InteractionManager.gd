@@ -14,6 +14,9 @@ var device_label: Label3D = null
 # Highlight material
 var highlight_material: StandardMaterial3D = null
 
+# History highlighting
+var history_highlighted_devices: Array[SmartDevice] = []
+
 func _ready() -> void:
 	# Create highlight material with emission
 	highlight_material = StandardMaterial3D.new()
@@ -155,3 +158,63 @@ func _input(event: InputEvent) -> void:
 		if mouse_event.pressed and mouse_event.button_index == MOUSE_BUTTON_LEFT:
 			if highlighted_device:
 				device_clicked.emit(highlighted_device)
+
+## History highlighting methods
+func highlight_devices(device_ids: Array) -> void:
+	"""Highlight multiple devices by their IDs (for history view)"""
+	# Clear previous highlights
+	clear_history_highlights()
+	
+	# Highlight new devices
+	for device_id in device_ids:
+		var device = DeviceRegistry.get_device(device_id)
+		if device and device.node_reference:
+			var device_node = device.node_reference
+			if device_node is SmartDevice:
+				device_node.highlight(true)
+				history_highlighted_devices.append(device_node)
+	
+	print("InteractionManager: Highlighted %d devices" % history_highlighted_devices.size())
+
+func clear_history_highlights() -> void:
+	"""Clear all history-related device highlights"""
+	for device in history_highlighted_devices:
+		if is_instance_valid(device):
+			device.highlight(false)
+	
+	history_highlighted_devices.clear()
+
+func focus_camera_on_devices(device_ids: Array) -> void:
+	"""Move camera to focus on specified devices"""
+	if not camera or device_ids.size() == 0:
+		return
+	
+	# Calculate center position of all devices
+	var center_pos = Vector3.ZERO
+	var valid_count = 0
+	
+	for device_id in device_ids:
+		var device = DeviceRegistry.get_device(device_id)
+		if device and device.node_reference:
+			center_pos += device.node_reference.global_position
+			valid_count += 1
+	
+	if valid_count == 0:
+		return
+	
+	center_pos /= valid_count
+	
+	# Move camera to look at center position
+	var camera_offset = Vector3(0, 3, 5)  # Offset from center
+	var target_pos = center_pos + camera_offset
+	
+	# Smooth camera movement using tween
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(camera, "global_position", target_pos, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	
+	# Make camera look at center
+	await tween.finished
+	camera.look_at(center_pos, Vector3.UP)
+	
+	print("InteractionManager: Focused camera on %d devices at %s" % [valid_count, center_pos])

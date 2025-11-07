@@ -13,6 +13,11 @@ signal interaction_requested(device: SmartDevice)
 
 var current_state: Dictionary = {}
 
+# Highlight state
+var is_highlighted: bool = false
+var highlight_material: StandardMaterial3D = null
+var original_materials: Dictionary = {}  # mesh_instance -> original_material
+
 ## Lifecycle Methods
 func _ready() -> void:
 	# Set up input event handling for mouse clicks
@@ -20,6 +25,13 @@ func _ready() -> void:
 		var collision_object = get_node("CollisionObject")
 		if collision_object is CollisionObject3D:
 			collision_object.input_event.connect(_on_input_event)
+	
+	# Create highlight material
+	highlight_material = StandardMaterial3D.new()
+	highlight_material.albedo_color = Color(1.0, 0.8, 0.2, 1.0)
+	highlight_material.emission_enabled = true
+	highlight_material.emission = Color(1.0, 0.8, 0.0, 1.0)
+	highlight_material.emission_energy_multiplier = 3.0
 	
 	# Register with DeviceRegistry if available
 	if DeviceRegistry:
@@ -53,6 +65,49 @@ func toggle() -> void:
 	"""Toggle device on/off state (override in subclasses for specific behavior)"""
 	if current_state.has("on"):
 		set_state({"on": not current_state["on"]})
+
+func highlight(enable: bool = true) -> void:
+	"""Highlight or unhighlight this device"""
+	if enable == is_highlighted:
+		return
+	
+	is_highlighted = enable
+	
+	if enable:
+		_apply_highlight()
+	else:
+		_remove_highlight()
+
+func _apply_highlight() -> void:
+	"""Apply highlight effect to all mesh instances"""
+	original_materials.clear()
+	
+	for child in _get_all_children(self):
+		if child is MeshInstance3D:
+			var mesh_instance = child as MeshInstance3D
+			# Store original material
+			var original_mat = mesh_instance.get_surface_override_material(0)
+			if original_mat:
+				original_materials[mesh_instance] = original_mat
+			# Apply highlight material
+			mesh_instance.set_surface_override_material(0, highlight_material)
+
+func _remove_highlight() -> void:
+	"""Remove highlight effect and restore original materials"""
+	for mesh_instance in original_materials.keys():
+		if is_instance_valid(mesh_instance):
+			var original_mat = original_materials[mesh_instance]
+			mesh_instance.set_surface_override_material(0, original_mat)
+	
+	original_materials.clear()
+
+func _get_all_children(node: Node) -> Array:
+	"""Recursively get all children of a node"""
+	var children = []
+	for child in node.get_children():
+		children.append(child)
+		children.append_array(_get_all_children(child))
+	return children
 
 ## Protected Methods (override in subclasses)
 func _apply_state_change(old_state: Dictionary, new_state: Dictionary) -> void:

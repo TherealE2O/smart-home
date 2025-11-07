@@ -1,0 +1,128 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx8y9qm6xvn4we"]
+
+[ext_resource type="Script" path="res://scripts/AutomationHistoryPanel.gd" id="1_history_panel"]
+
+[node name="AutomationHistoryPanel" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_history_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TitleBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/TitleBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "Automation History"
+
+[node name="RefreshButton" type="Button" parent="MarginContainer/VBoxContainer/TitleBar"]
+layout_mode = 2
+text = "Refresh"
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer/TitleBar"]
+layout_mode = 2
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HistoryListContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="ListLabel" type="Label" parent="MarginContainer/VBoxContainer/HistoryListContainer"]
+layout_mode = 2
+text = "Recent Automation Executions:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HistoryListContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="HistoryList" type="ItemList" parent="MarginContainer/VBoxContainer/HistoryListContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DetailsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="DetailsLabel" type="Label" parent="MarginContainer/VBoxContainer/DetailsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Details:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/DetailsContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DetailsText" type="RichTextLabel" parent="MarginContainer/VBoxContainer/DetailsContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Select an automation from the list to view details."
+fit_content = true
+
+[node name="ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/DetailsContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HighlightButton" type="Button" parent="MarginContainer/VBoxContainer/DetailsContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Highlight Devices"
+
+[node name="FocusButton" type="Button" parent="MarginContainer/VBoxContainer/DetailsContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Focus Camera"
+
+[node name="ReplayButton" type="Button" parent="MarginContainer/VBoxContainer/DetailsContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "Replay Automation"
+
+[node name="ReplayProgress" type="ProgressBar" parent="MarginContainer/VBoxContainer/DetailsContainer"]
+layout_mode = 2
+max_value = 1.0
+show_percentage = false
+
+[node name="ReplayLabel" type="Label" parent="MarginContainer/VBoxContainer/DetailsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = ""
+horizontal_alignment = 1

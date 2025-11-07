@@ -139,8 +139,8 @@
     - Show panel on device click, hide on close button or outside click
     - _Requirements: 2.2, 2.3, 2.5_
 
-- [ ] 6. Create automation data models and engine
-  - [ ] 6.1 Implement automation resource classes
+- [x] 6. Create automation data models and engine
+  - [x] 6.1 Implement automation resource classes
     - Create Automation.gd resource with id, name, trigger, conditions, actions, enabled flag
     - Create AutomationTrigger.gd with TriggerType enum (TIME, DEVICE_STATE, MANUAL)
     - Create AutomationCondition.gd for conditional logic
@@ -148,7 +148,7 @@
     - Create AutomationHistoryEntry.gd for history tracking
     - _Requirements: 4.4, 3.3_
   
-  - [ ] 6.2 Implement automation engine logic
+  - [x] 6.2 Implement automation engine logic
     - Add active_automations and automation_history arrays to AutomationEngine
     - Implement add_automation(), remove_automation() methods
     - Create evaluate_automations() method called every second via Timer
@@ -157,28 +157,28 @@
     - Implement history recording on each automation execution
     - _Requirements: 4.4, 5.2, 5.3_
   
-  - [ ] 6.3 Create sample automation data
+  - [x] 6.3 Create sample automation data
     - Add 10 pre-configured sample automations to demonstrate capabilities
     - Include time-based triggers (evening lights, morning routine)
     - Include device-state triggers (door opens → lights on)
     - Execute sample automations to populate history with entries
     - _Requirements: 3.1_
 
-- [ ] 7. Build automation history viewer
-  - [ ] 7.1 Create automation history UI panel
+- [x] 7. Build automation history viewer
+  - [x] 7.1 Create automation history UI panel
     - Create AutomationHistoryPanel.tscn with ScrollContainer and ItemList
     - Implement get_history() display showing automation name, timestamp, trigger reason
     - Format timestamps as readable date/time strings
     - Add selection handling to show details of selected history entry
     - _Requirements: 3.1, 3.2, 3.3_
   
-  - [ ] 7.2 Implement history entry detail view and device highlighting
+  - [x] 7.2 Implement history entry detail view and device highlighting
     - Show affected devices list and actions performed for selected entry
     - Implement highlight_devices() to visually highlight affected devices in 3D scene
     - Add camera focus button to move camera to highlighted devices
     - _Requirements: 3.4_
   
-  - [ ] 7.3 Add automation replay functionality
+  - [x] 7.3 Add automation replay functionality
     - Implement replay_automation() method to re-execute actions from history
     - Add visual feedback showing each action as it executes with delays
     - Display replay progress indicator

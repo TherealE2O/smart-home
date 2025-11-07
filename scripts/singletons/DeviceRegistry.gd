@@ -33,29 +33,64 @@ var devices_by_type: Dictionary = {}
 func _ready() -> void:
 	pass
 
-## Register a new device
-func register_device(device_id: String, device_type: String, device_name: String, room: String, initial_state: Dictionary = {}) -> Device:
-	if devices.has(device_id):
-		push_warning("Device %s already registered" % device_id)
-		return devices[device_id]
+## Register a new device (supports both SmartDevice nodes and manual registration)
+func register_device(device_id_or_node, device_type: String = "", device_name: String = "", room: String = "", initial_state: Dictionary = {}):
+	# Handle SmartDevice node registration
+	if device_id_or_node is Node:
+		var smart_device = device_id_or_node
+		var device_id = smart_device.device_id
+		var device_type_val = smart_device.device_type if smart_device.device_type != "" else "unknown"
+		var device_name_val = smart_device.device_name if smart_device.device_name != "" else device_id
+		var room_val = "unknown"  # Could be extracted from scene hierarchy if needed
+		
+		if devices.has(device_id):
+			push_warning("Device %s already registered, updating reference" % device_id)
+			devices[device_id].node_reference = smart_device
+			return devices[device_id]
+		
+		var device = Device.new(device_id, device_type_val, device_name_val, room_val)
+		device.state = smart_device.current_state.duplicate()
+		device.node_reference = smart_device
+		
+		devices[device_id] = device
+		
+		# Add to room index
+		if not devices_by_room.has(room_val):
+			devices_by_room[room_val] = []
+		devices_by_room[room_val].append(device)
+		
+		# Add to type index
+		if not devices_by_type.has(device_type_val):
+			devices_by_type[device_type_val] = []
+		devices_by_type[device_type_val].append(device)
+		
+		device_registered.emit(device_id)
+		return device
 	
-	var device = Device.new(device_id, device_type, device_name, room)
-	device.state = initial_state
-	
-	devices[device_id] = device
-	
-	# Add to room index
-	if not devices_by_room.has(room):
-		devices_by_room[room] = []
-	devices_by_room[room].append(device)
-	
-	# Add to type index
-	if not devices_by_type.has(device_type):
-		devices_by_type[device_type] = []
-	devices_by_type[device_type].append(device)
-	
-	device_registered.emit(device_id)
-	return device
+	# Handle manual registration with parameters
+	else:
+		var device_id = device_id_or_node
+		if devices.has(device_id):
+			push_warning("Device %s already registered" % device_id)
+			return devices[device_id]
+		
+		var device = Device.new(device_id, device_type, device_name, room)
+		device.state = initial_state
+		
+		devices[device_id] = device
+		
+		# Add to room index
+		if not devices_by_room.has(room):
+			devices_by_room[room] = []
+		devices_by_room[room].append(device)
+		
+		# Add to type index
+		if not devices_by_type.has(device_type):
+			devices_by_type[device_type] = []
+		devices_by_type[device_type].append(device)
+		
+		device_registered.emit(device_id)
+		return device
 
 ## Unregister a device
 func unregister_device(device_id: String) -> void:

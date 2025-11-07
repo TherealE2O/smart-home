@@ -4,6 +4,7 @@ extends Node3D
 @onready var spawn_point: Marker3D = $SpawnPoint
 @onready var explore_camera: Camera3D = $ExploreCamera
 @onready var device_control_panel: Panel = $UI/DeviceControlPanel
+@onready var automation_history_panel: Panel = $UI/AutomationHistoryPanel
 
 # Device name mappings
 var device_configs: Dictionary = {
@@ -40,11 +41,40 @@ func _ready() -> void:
 		
 		# Connect InteractionManager signals to control panel
 		InteractionManager.device_clicked.connect(_on_device_clicked)
+	
+	# Connect automation history panel signals
+	if automation_history_panel:
+		automation_history_panel.device_highlight_requested.connect(_on_device_highlight_requested)
+		automation_history_panel.camera_focus_requested.connect(_on_camera_focus_requested)
+		automation_history_panel.hide()  # Start hidden
 
 func _on_device_clicked(device: SmartDevice) -> void:
 	"""Handle device click to show control panel"""
 	if device_control_panel:
 		device_control_panel.show_device(device)
+
+func _on_device_highlight_requested(device_ids: Array) -> void:
+	"""Handle request to highlight devices from history panel"""
+	if InteractionManager:
+		InteractionManager.highlight_devices(device_ids)
+
+func _on_camera_focus_requested(device_ids: Array) -> void:
+	"""Handle request to focus camera on devices from history panel"""
+	if InteractionManager:
+		InteractionManager.focus_camera_on_devices(device_ids)
+
+func _input(event: InputEvent) -> void:
+	"""Handle input for showing history panel"""
+	if event is InputEventKey:
+		var key_event = event as InputEventKey
+		if key_event.pressed and key_event.keycode == KEY_H:
+			# Toggle history panel with H key
+			if automation_history_panel:
+				if automation_history_panel.visible:
+					automation_history_panel.hide()
+					InteractionManager.clear_history_highlights()
+				else:
+					automation_history_panel.show_panel()
 
 func _configure_all_devices() -> void:
 	"""Configure device IDs and names, then register with DeviceRegistry"""
