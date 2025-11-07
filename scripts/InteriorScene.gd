@@ -64,7 +64,7 @@ func _on_camera_focus_requested(device_ids: Array) -> void:
 		InteractionManager.focus_camera_on_devices(device_ids)
 
 func _input(event: InputEvent) -> void:
-	"""Handle input for showing history panel"""
+	"""Handle input for showing history panel and automation editor"""
 	if event is InputEventKey:
 		var key_event = event as InputEventKey
 		if key_event.pressed and key_event.keycode == KEY_H:
@@ -75,6 +75,9 @@ func _input(event: InputEvent) -> void:
 					InteractionManager.clear_history_highlights()
 				else:
 					automation_history_panel.show_panel()
+		elif key_event.pressed and key_event.keycode == KEY_E:
+			# Open automation editor with E key
+			SceneManager.change_scene("res://scenes/AutomationEditorScene.tscn")
 
 func _configure_all_devices() -> void:
 	"""Configure device IDs and names, then register with DeviceRegistry"""

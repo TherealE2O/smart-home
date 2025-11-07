@@ -1,0 +1,180 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8j5k3m9n2p4q"]
+
+[ext_resource type="Script" path="res://scripts/AutomationEditorScene.gd" id="1_editor"]
+
+[node name="AutomationEditorScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_editor")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15, 0.15, 0.18, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Toolbar" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginLeft" type="Control" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/Toolbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Automation Editor"
+vertical_alignment = 1
+
+[node name="AutomationNameEdit" type="LineEdit" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+placeholder_text = "Automation Name"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Save"
+
+[node name="TestButton" type="Button" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Test"
+
+[node name="ClearButton" type="Button" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Clear"
+
+[node name="CloseButton" type="Button" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Close"
+
+[node name="MarginRight" type="Control" parent="VBoxContainer/Toolbar"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="MainContent" type="HSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NodePalette" type="Panel" parent="VBoxContainer/MainContent"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MainContent/NodePalette"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MainContent/NodePalette/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PaletteTitle" type="Label" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Node Palette"
+horizontal_alignment = 1
+
+[node name="HSeparator1" type="HSeparator" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TriggersLabel" type="Label" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Triggers"
+
+[node name="TimeTriggerButton" type="Button" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "+ Time Trigger"
+
+[node name="DeviceStateTriggerButton" type="Button" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "+ Device State Trigger"
+
+[node name="ManualTriggerButton" type="Button" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "+ Manual Trigger"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ActionsLabel" type="Label" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Actions"
+
+[node name="DeviceActionButton" type="Button" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "+ Device Action"
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HelpLabel" type="Label" parent="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Connect trigger nodes to action nodes to create automation rules."
+autowrap_mode = 3
+
+[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/MainContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+right_disconnects = true
+show_zoom_label = true
+minimap_enabled = false
+
+[node name="StatusBar" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/StatusBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer/StatusBar/MarginContainer"]
+layout_mode = 2
+text = "Ready"
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/Toolbar/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Toolbar/TestButton" to="." method="_on_test_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Toolbar/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Toolbar/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer/TimeTriggerButton" to="." method="_on_time_trigger_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer/DeviceStateTriggerButton" to="." method="_on_device_state_trigger_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer/ManualTriggerButton" to="." method="_on_manual_trigger_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainContent/NodePalette/MarginContainer/VBoxContainer/DeviceActionButton" to="." method="_on_device_action_button_pressed"]
+[connection signal="connection_request" from="VBoxContainer/MainContent/GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="disconnection_request" from="VBoxContainer/MainContent/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="delete_nodes_request" from="VBoxContainer/MainContent/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]

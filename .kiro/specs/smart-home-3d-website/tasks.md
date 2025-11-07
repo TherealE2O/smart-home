@@ -184,15 +184,15 @@
     - Display replay progress indicator
     - _Requirements: 3.5_
 
-- [ ] 8. Create visual automation editor
-  - [ ] 8.1 Build automation editor scene with GraphEdit
+- [x] 8. Create visual automation editor
+  - [x] 8.1 Build automation editor scene with GraphEdit
     - Create AutomationEditorScene.tscn with GraphEdit node
     - Add node palette panel with buttons for trigger types and device actions
     - Implement grid background and zoom controls
     - Add toolbar with Save, Test, Clear buttons
     - _Requirements: 4.1_
   
-  - [ ] 8.2 Implement trigger and action node classes
+  - [x] 8.2 Implement trigger and action node classes
     - Create TriggerNode.gd extending GraphNode with trigger type selection
     - Add time picker controls for TIME triggers
     - Add device/state selectors for DEVICE_STATE triggers
@@ -200,14 +200,14 @@
     - Add action parameter controls (sliders, toggles, inputs) based on device type
     - _Requirements: 4.2, 4.3_
   
-  - [ ] 8.3 Implement node connection and validation
+  - [x] 8.3 Implement node connection and validation
     - Handle connection_request signal to create connections between nodes
     - Validate connections (trigger → action, no circular dependencies)
     - Implement disconnection_request handling
     - Add visual feedback for valid/invalid connections
     - _Requirements: 4.4, 5.5_
   
-  - [ ] 8.4 Add automation save and test functionality
+  - [x] 8.4 Add automation save and test functionality
     - Implement save_automation() to convert graph to Automation resource
     - Generate unique automation_id and timestamp
     - Add automation to AutomationEngine active list

@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://water_tank_001" path="res://models/devices/water_tank.tscn" id="11_tank"]
 [ext_resource type="Script" path="res://scripts/ExploreCamera.gd" id="12_camera"]
 [ext_resource type="PackedScene" uid="uid://c8y7qm5xvn3wd" path="res://ui/DeviceControlPanel.tscn" id="13_control_panel"]
+[ext_resource type="PackedScene" uid="uid://bx8y9qm6xvn4we" path="res://ui/AutomationHistoryPanel.tscn" id="14_history_panel"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_floor"]
 size = Vector3(15, 0.2, 15)
@@ -179,3 +180,49 @@ enabled = true
 
 [node name="DeviceControlPanel" parent="UI" instance=ExtResource("13_control_panel")]
 visible = false
+
+[node name="AutomationHistoryPanel" parent="UI" instance=ExtResource("14_history_panel")]
+visible = false
+
+[node name="HelpOverlay" type="Panel" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -120.0
+offset_right = 310.0
+offset_bottom = -10.0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/HelpOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HelpOverlay/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="UI/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="UI/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="Label" parent="UI/HelpOverlay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "WASD - Move Camera
+Mouse - Look Around
+Click - Interact with Device
+H - Toggle History Panel
+E - Open Automation Editor
+ESC - Close Panels"
+autowrap_mode = 3
