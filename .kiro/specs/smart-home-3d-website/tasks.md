@@ -253,15 +253,15 @@
     - Save settings (graphics quality, tutorial completion) to LocalStorage
     - _Requirements: 6.1_
 
-- [ ] 11. Create main menu and scene flow
-  - [ ] 11.1 Build main menu scene
+- [x] 11. Create main menu and scene flow
+  - [x] 11.1 Build main menu scene
     - Create MainMenu.tscn with title, start button, instructions
     - Add company branding and smart home service description
     - Implement start button to load ExteriorScene
     - Add settings button for graphics quality options
     - _Requirements: 6.1_
   
-  - [ ] 11.2 Implement loading screen with progress indicator
+  - [x] 11.2 Implement loading screen with progress indicator
     - Create LoadingScreen.tscn with progress bar and loading text
     - Show loading screen during scene transitions
     - Update progress bar based on loading status

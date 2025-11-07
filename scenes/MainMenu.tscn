@@ -1,0 +1,202 @@
+[gd_scene load_steps=2 format=3 uid="uid://main_menu_001"]
+
+[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_script"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.15, 0.2, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="TitleContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "Smart Home 3D"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="VBoxContainer/TitleContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Interactive Home Automation Experience"
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Description" type="RichTextLabel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]Welcome to the future of home automation!
+
+Experience a fully interactive 3D smart home where you can:
+• Drive through automated gates and garage
+• Control smart devices throughout the home
+• Create custom automations with a visual editor
+• View automation history and replay events[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="StartButton" type="Button" parent="VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.8, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "Start Experience"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Settings"
+
+[node name="Branding" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 14
+text = "Powered by SmartHome Solutions™"
+horizontal_alignment = 1
+
+[node name="SettingsPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SettingsTitle" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GraphicsQualityContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Graphics Quality"
+
+[node name="QualityButtons" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LowButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer/QualityButtons"]
+custom_minimum_size = Vector2(140, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Low"
+
+[node name="MediumButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer/QualityButtons"]
+custom_minimum_size = Vector2(140, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Medium"
+
+[node name="HighButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer/QualityButtons"]
+custom_minimum_size = Vector2(140, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "High"
+
+[node name="Spacer" type="Control" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "Close"
+
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer/QualityButtons/LowButton" to="." method="_on_quality_button_pressed" binds= ["low"]]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer/QualityButtons/MediumButton" to="." method="_on_quality_button_pressed" binds= ["medium"]]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/GraphicsQualityContainer/QualityButtons/HighButton" to="." method="_on_quality_button_pressed" binds= ["high"]]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/CloseButton" to="." method="_on_close_settings_pressed"]

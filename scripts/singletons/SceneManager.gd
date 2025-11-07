@@ -52,6 +52,16 @@ func change_scene(scene_path: String, use_transition: bool = true) -> void:
 	# Load the new scene
 	call_deferred("_deferred_change_scene", scene_path)
 
+## Load a scene with loading screen
+func change_scene_with_loading(scene_path: String) -> void:
+	"""Load a scene using the loading screen for progress indication"""
+	if is_transitioning:
+		push_warning("Scene transition already in progress")
+		return
+	
+	# First load the loading screen
+	change_scene("res://scenes/LoadingScreen.tscn", false)
+
 func _deferred_change_scene(scene_path: String) -> void:
 	# Remove current scene
 	if current_scene:
