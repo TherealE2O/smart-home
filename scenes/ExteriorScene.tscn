@@ -1,0 +1,118 @@
+[gd_scene load_steps=15 format=3 uid="uid://c8j9k2m3n4o5p6q7"]
+
+[ext_resource type="Script" path="res://scripts/ExteriorScene.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://gate_001" path="res://models/devices/gate.tscn" id="1_gate"]
+[ext_resource type="PackedScene" uid="uid://garage_door_001" path="res://models/devices/garage_door.tscn" id="2_garage"]
+[ext_resource type="PackedScene" uid="uid://vehicle_001" path="res://models/Vehicle.tscn" id="3_vehicle"]
+[ext_resource type="Script" path="res://scripts/VehicleCamera.gd" id="4_camera"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProceduralSkyMaterial_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(50, 0.2, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(50, 0.2, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_house_body"]
+size = Vector3(12, 6, 10)
+
+[sub_resource type="PrismMesh" id="PrismMesh_roof"]
+size = Vector3(13, 3, 11)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gate_trigger"]
+size = Vector3(8, 3, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_garage_trigger"]
+size = Vector3(6, 3, 5)
+
+[node name="ExteriorScene" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Driveway" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Driveway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Driveway"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="HouseExterior" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 15)
+
+[node name="HouseBody" type="MeshInstance3D" parent="HouseExterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+mesh = SubResource("BoxMesh_house_body")
+
+[node name="HouseRoof" type="MeshInstance3D" parent="HouseExterior"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 6.5, 0)
+mesh = SubResource("PrismMesh_roof")
+
+[node name="SmartGate" parent="." instance=ExtResource("1_gate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+
+[node name="GateTrigger" type="Area3D" parent="SmartGate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SmartGate/GateTrigger"]
+shape = SubResource("BoxShape3D_gate_trigger")
+
+[node name="SmartGarage" parent="." instance=ExtResource("2_garage")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 10)
+
+[node name="GarageTrigger" type="Area3D" parent="SmartGarage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SmartGarage/GarageTrigger"]
+shape = SubResource("BoxShape3D_garage_trigger")
+
+[node name="Vehicle" parent="." instance=ExtResource("3_vehicle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -20)
+
+[node name="VehicleCamera" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -20)
+script = ExtResource("4_camera")
+target = NodePath("../Vehicle")
+camera_distance = 8.0
+camera_height = 3.0
+
+[node name="SpringArm3D" type="SpringArm3D" parent="VehicleCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+spring_length = 8.0
+margin = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="VehicleCamera/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0)

@@ -14,7 +14,7 @@
   - Configure web export preset with WebGL 2.0 and compression settings
   - _Requirements: 6.1, 6.3, 7.1_
 
-- [-] 2. Create base smart device system
+- [x] 2. Create base smart device system
 
 
 
@@ -46,7 +46,7 @@
     - _Requirements: 2.1, 7.1, 7.3, 7.4, 7.5_
   
 
-  - [ ] 2.3 Implement specific device classes with visual feedback
+  - [x] 2.3 Implement specific device classes with visual feedback
 
 
 
@@ -67,28 +67,28 @@
     - Ensure all state changes complete within 500ms as per requirements
     - _Requirements: 2.1, 2.3, 2.4_
 
-- [ ] 3. Build exterior scene with vehicle driving
-  - [ ] 3.1 Create exterior scene with drivable area
+- [x] 3. Build exterior scene with vehicle driving
+  - [x] 3.1 Create exterior scene with drivable area
     - Create ExteriorScene.tscn with terrain, driveway, and house exterior
     - Add placeholder house exterior model
     - Position SmartGate and SmartGarage in scene
     - Set up lighting and environment
     - _Requirements: 1.1, 1.2_
   
-  - [ ] 3.2 Implement vehicle controller with physics
+  - [x] 3.2 Implement vehicle controller with physics
     - Create VehicleController.gd extending VehicleBody3D
     - Implement acceleration, braking, and steering input handling
     - Add vehicle placeholder model with wheels
     - Configure vehicle physics properties (mass, friction, suspension)
     - _Requirements: 1.2_
   
-  - [ ] 3.3 Add proximity triggers for automatic gate and garage opening
+  - [x] 3.3 Add proximity triggers for automatic gate and garage opening
     - Create Area3D trigger zones near gate and garage
     - Connect triggers to SmartGate and SmartGarage to open automatically
     - Implement smooth opening animations when vehicle approaches
     - _Requirements: 1.3, 1.4_
   
-  - [ ] 3.4 Implement vehicle camera with spring arm
+  - [x] 3.4 Implement vehicle camera with spring arm
     - Create VehicleCamera.gd with SpringArm3D for smooth following
     - Add camera rotation controls with mouse or keyboard
     - Implement camera collision avoidance
