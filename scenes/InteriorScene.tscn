@@ -1,0 +1,181 @@
+[gd_scene load_steps=15 format=3 uid="uid://interior_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/InteriorScene.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://light_bulb_001" path="res://models/devices/light_bulb.tscn" id="2_light"]
+[ext_resource type="PackedScene" uid="uid://tv_001" path="res://models/devices/tv.tscn" id="3_tv"]
+[ext_resource type="PackedScene" uid="uid://ac_unit_001" path="res://models/devices/ac_unit.tscn" id="4_ac"]
+[ext_resource type="PackedScene" uid="uid://heater_001" path="res://models/devices/heater.tscn" id="5_heater"]
+[ext_resource type="PackedScene" uid="uid://door_001" path="res://models/devices/door.tscn" id="6_door"]
+[ext_resource type="PackedScene" uid="uid://window_001" path="res://models/devices/window.tscn" id="7_window"]
+[ext_resource type="PackedScene" uid="uid://blind_001" path="res://models/devices/blind.tscn" id="8_blind"]
+[ext_resource type="PackedScene" uid="uid://tap_001" path="res://models/devices/tap.tscn" id="9_tap"]
+[ext_resource type="PackedScene" uid="uid://water_pump_001" path="res://models/devices/water_pump.tscn" id="10_pump"]
+[ext_resource type="PackedScene" uid="uid://water_tank_001" path="res://models/devices/water_tank.tscn" id="11_tank"]
+[ext_resource type="Script" path="res://scripts/ExploreCamera.gd" id="12_camera"]
+[ext_resource type="PackedScene" uid="uid://c8y7qm5xvn3wd" path="res://ui/DeviceControlPanel.tscn" id="13_control_panel"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(15, 0.2, 15)
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.8, 0.8, 0.75, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(0.2, 3, 15)
+
+[sub_resource type="StandardMaterial3D" id="Material_wall"]
+albedo_color = Color(0.9, 0.9, 0.85, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ceiling"]
+size = Vector3(15, 0.2, 15)
+
+[node name="InteriorScene" type="Node3D"]
+script = ExtResource("1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 5, 0)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="Structure" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Structure"]
+mesh = SubResource("BoxMesh_floor")
+surface_material_override/0 = SubResource("Material_floor")
+
+[node name="Ceiling" type="MeshInstance3D" parent="Structure"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+mesh = SubResource("BoxMesh_ceiling")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="WallNorth" type="MeshInstance3D" parent="Structure"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -7.5)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="WallSouth" type="MeshInstance3D" parent="Structure"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7.5)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="WallEast" type="MeshInstance3D" parent="Structure"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.5, 1.5, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="WallWest" type="MeshInstance3D" parent="Structure"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.5, 1.5, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="RoomDividers" type="Node3D" parent="Structure"]
+
+[node name="DividerLivingBedroom" type="MeshInstance3D" parent="Structure/RoomDividers"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.5, -3.5)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="DividerKitchenBathroom" type="MeshInstance3D" parent="Structure/RoomDividers"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.5, 3.5)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Material_wall")
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="AmbientLight" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+light_energy = 0.5
+light_indirect_energy = 0.5
+omni_range = 20.0
+
+[node name="Rooms" type="Node3D" parent="."]
+
+[node name="LivingRoom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -5.5)
+
+[node name="Bedroom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -5.5)
+
+[node name="Kitchen" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 5.5)
+
+[node name="Bathroom" type="Node3D" parent="Rooms"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 5.5)
+
+[node name="Devices" type="Node3D" parent="."]
+
+[node name="LivingRoomLight" parent="Devices" instance=ExtResource("2_light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, -5.5)
+
+[node name="BedroomLight" parent="Devices" instance=ExtResource("2_light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, -5.5)
+
+[node name="KitchenLight" parent="Devices" instance=ExtResource("2_light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, 5.5)
+
+[node name="BathroomLight" parent="Devices" instance=ExtResource("2_light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.5, 5.5)
+
+[node name="LivingRoomTV" parent="Devices" instance=ExtResource("3_tv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5, -7.3)
+
+[node name="LivingRoomAC" parent="Devices" instance=ExtResource("4_ac")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.2, -5.5)
+
+[node name="BedroomHeater" parent="Devices" instance=ExtResource("5_heater")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.3, -5.5)
+
+[node name="FrontDoor" parent="Devices" instance=ExtResource("6_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.4, 0, 0)
+
+[node name="BedroomDoor" parent="Devices" instance=ExtResource("6_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.1, 0, -3.5)
+
+[node name="BathroomDoor" parent="Devices" instance=ExtResource("6_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.1, 0, 3.5)
+
+[node name="LivingRoomWindow" parent="Devices" instance=ExtResource("7_window")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5, -7.4)
+
+[node name="BedroomWindow" parent="Devices" instance=ExtResource("7_window")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.4, 1.5, -5.5)
+
+[node name="KitchenWindow" parent="Devices" instance=ExtResource("7_window")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5, 7.4)
+
+[node name="LivingRoomBlind" parent="Devices" instance=ExtResource("8_blind")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.5, -7.35)
+
+[node name="BedroomBlind" parent="Devices" instance=ExtResource("8_blind")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.35, 2.5, -5.5)
+
+[node name="KitchenSink" parent="Devices" instance=ExtResource("9_tap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 7)
+
+[node name="BathroomSink" parent="Devices" instance=ExtResource("9_tap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 7)
+
+[node name="WaterPump" parent="Devices" instance=ExtResource("10_pump")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0.3, 5.5)
+
+[node name="WaterTank" parent="Devices" instance=ExtResource("11_tank")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.5, 5.5)
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="ExploreCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+current = true
+script = ExtResource("12_camera")
+
+[node name="RayCast3D" type="RayCast3D" parent="ExploreCamera"]
+target_position = Vector3(0, 0, -0.5)
+enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DeviceControlPanel" parent="UI" instance=ExtResource("13_control_panel")]
+visible = false

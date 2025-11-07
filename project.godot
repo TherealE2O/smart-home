@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 SceneManager="*res://scripts/singletons/SceneManager.gd"
 DeviceRegistry="*res://scripts/singletons/DeviceRegistry.gd"
 AutomationEngine="*res://scripts/singletons/AutomationEngine.gd"
+InteractionManager="*res://scripts/singletons/InteractionManager.gd"
 
 [display]
 

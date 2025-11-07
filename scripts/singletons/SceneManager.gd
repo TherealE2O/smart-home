@@ -10,10 +10,32 @@ signal scene_transition_completed()
 var current_scene: Node = null
 var is_transitioning: bool = false
 
+# Fade overlay
+var fade_overlay: ColorRect = null
+var fade_duration: float = 0.5
+
 func _ready() -> void:
 	# Get the initial scene
 	var root = get_tree().root
 	current_scene = root.get_child(root.get_child_count() - 1)
+	
+	# Create fade overlay
+	_create_fade_overlay()
+
+func _create_fade_overlay() -> void:
+	"""Create a CanvasLayer with ColorRect for fade transitions"""
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 100  # High layer to be on top
+	canvas_layer.name = "FadeOverlay"
+	add_child(canvas_layer)
+	
+	fade_overlay = ColorRect.new()
+	fade_overlay.color = Color(0, 0, 0, 0)  # Start transparent
+	fade_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	canvas_layer.add_child(fade_overlay)
+	
+	# Make it cover the entire screen
+	fade_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 
 ## Load a new scene with optional transition
 func change_scene(scene_path: String, use_transition: bool = true) -> void:
@@ -49,13 +71,23 @@ func _deferred_change_scene(scene_path: String) -> void:
 
 ## Fade out transition effect
 func _fade_out() -> void:
-	# Placeholder for fade transition
-	await get_tree().create_timer(0.3).timeout
+	if not fade_overlay:
+		await get_tree().create_timer(fade_duration).timeout
+		return
+	
+	var tween = create_tween()
+	tween.tween_property(fade_overlay, "color:a", 1.0, fade_duration)
+	await tween.finished
 
 ## Fade in transition effect
 func _fade_in() -> void:
-	# Placeholder for fade transition
-	await get_tree().create_timer(0.3).timeout
+	if not fade_overlay:
+		await get_tree().create_timer(fade_duration).timeout
+		return
+	
+	var tween = create_tween()
+	tween.tween_property(fade_overlay, "color:a", 0.0, fade_duration)
+	await tween.finished
 
 ## Get the current active scene
 func get_current_scene() -> Node:

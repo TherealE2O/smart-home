@@ -37,6 +37,9 @@ size = Vector3(8, 3, 5)
 [sub_resource type="BoxShape3D" id="BoxShape3D_garage_trigger"]
 size = Vector3(6, 3, 5)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_interior_trigger"]
+size = Vector3(5, 3, 3)
+
 [node name="ExteriorScene" type="Node3D"]
 script = ExtResource("1_script")
 
@@ -98,6 +101,14 @@ collision_mask = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SmartGarage/GarageTrigger"]
 shape = SubResource("BoxShape3D_garage_trigger")
+
+[node name="InteriorTransitionTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 13)
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteriorTransitionTrigger"]
+shape = SubResource("BoxShape3D_interior_trigger")
 
 [node name="Vehicle" parent="." instance=ExtResource("3_vehicle")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -20)

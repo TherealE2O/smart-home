@@ -94,14 +94,14 @@
     - Implement camera collision avoidance
     - _Requirements: 6.4_
 
-- [ ] 4. Build interior scene with exploration
-  - [ ] 4.1 Create interior scene layout
+- [x] 4. Build interior scene with exploration
+  - [x] 4.1 Create interior scene layout
     - Create InteriorScene.tscn with rooms (living room, bedroom, kitchen, bathroom)
     - Add placeholder interior structure model
     - Set up interior lighting
     - _Requirements: 1.5_
   
-  - [ ] 4.2 Populate interior with smart devices
+  - [x] 4.2 Populate interior with smart devices
     - Place SmartLight instances in each room
     - Add SmartTV, SmartAC, SmartHeater in appropriate rooms
     - Place SmartDoor, SmartWindow, SmartBlind instances
@@ -109,28 +109,28 @@
     - Register all devices with DeviceRegistry on scene ready
     - _Requirements: 2.1_
   
-  - [ ] 4.3 Implement free exploration camera
+  - [x] 4.3 Implement free exploration camera
     - Create ExploreCamera.gd with WASD movement and mouse look
     - Add camera collision detection to prevent clipping through walls
     - Implement smooth camera movement with acceleration/deceleration
     - _Requirements: 6.4_
   
-  - [ ] 4.4 Create scene transition from exterior to interior
+  - [x] 4.4 Create scene transition from exterior to interior
     - Add transition trigger when vehicle enters garage
     - Implement fade transition effect
     - Switch from VehicleCamera to ExploreCamera
     - Load interior scene and unload exterior scene
     - _Requirements: 1.5_
 
-- [ ] 5. Implement device interaction system
-  - [ ] 5.1 Create interaction manager with raycasting
+- [x] 5. Implement device interaction system
+  - [x] 5.1 Create interaction manager with raycasting
     - Implement InteractionManager.gd singleton
     - Add raycast from camera center to detect devices under cursor
     - Implement device highlighting on hover (outline shader or emission)
     - Add device name label display on hover
     - _Requirements: 2.2, 8.3_
   
-  - [ ] 5.2 Build device control panel UI
+  - [x] 5.2 Build device control panel UI
     - Create DeviceControlPanel.tscn with Panel, Labels, and Control widgets
     - Implement show_device() method to populate panel with device-specific controls
     - Add sliders for adjustable parameters (brightness, temperature, position)
